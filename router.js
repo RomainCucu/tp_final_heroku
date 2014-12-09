@@ -97,7 +97,7 @@ go_post:
 				this.resp.end(JSON.stringify({message: "login_connexion_refused"}));
 			}			
 		}		
-		else if (b.ac == "register"){
+		else if (b.ac == "register" && this.path == "/new_thread"){
 			traitementData(b.username);
 			traitementData(b.password);	
 
