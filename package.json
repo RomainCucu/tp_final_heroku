@@ -1,12 +1,24 @@
 {
-  "name": "serveur_heroku",
+  "name": "ProjetM2MaximeStatus",
   "version": "1.0.0",
-  "description": "",
+  "description": "ProjetM2 ========",
   "main": "db.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
   },
+  "dependencies": {
+    "mongodb": "x"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/RomainCucu/tp_final_heroku.git"
+  },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alexandremagne/ProjetM2/issues"
+  },
+  "homepage": "https://github.com/alexandremagne/ProjetM2",
+  "devDependencies": {}
 }
