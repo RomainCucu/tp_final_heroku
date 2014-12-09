@@ -41,6 +41,7 @@ rest_method:
 		} else if (this.req.method == "POST") {
 			this.post_method();
 		} else {
+			console.log("501 error")
 			this.resp.writeHead(501,{"Content -Type": "application/json"});
 			this.resp.write(JSON.stringify({message: "Not Implemented"}));
 			this.resp.end();
