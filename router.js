@@ -77,6 +77,7 @@ post_method:
     },
     
 go_post:
+	console.log("gopost ici");
 	function (b) {
 		b = JSON.parse(b);
 		this.b = b;
