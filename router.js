@@ -171,6 +171,7 @@ function () {
 		this.path = "./index.html";
 		this.filetype = "html";
 	}*/
+	this.resp.writeHead(200,{"Content-Type": "text/plain", "Access-Control-Allow-Headers" : "Origin", "Access-Control-Allow-Origin" : "*","Access-Control-Allow-Methods": "GET, POST, OPTIONS, PUT, PATCH, DELETE"});
 	this.resp.end("<h1>bonjour</h1>")
 	//this.load_file();	
 },
