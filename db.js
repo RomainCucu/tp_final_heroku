@@ -40,12 +40,12 @@ exports.register = function (username,pwd,res){
 MongoClient.connect('mongodb://romain:alex@dogen.mongohq.com:10034/projet_maxime', function(err, db) {
 	if(err) {//en cas d'erreur de connection
 						console.log("erreur de connexion au niveau de register: "+err);
-						res.writeHead(503, {"Content-Type": "text/plain", "Access-Control-Allow-Headers" : "Origin", "Access-Control-Allow-Origin" : "*","Access-Control-Allow-Methods": "GET, POST, OPTIONS, PUT, PATCH, DELETE"});
+						res.writeHead(503, {"Content-Type": "text/plain", "Access-Control-Allow-Headers" : "Origin", "Access-Control-Allow-Origin" : "*"});
 						res.end(JSON.stringify({message: "connexion_error"}));
 						return;
 			}
 	else{
-		res.writeHead(200, {"Content-Type": "text/plain", "Access-Control-Allow-Headers" : "Origin", "Access-Control-Allow-Origin" : "*","Access-Control-Allow-Methods": "GET, POST, OPTIONS, PUT, PATCH, DELETE"});
+		res.writeHead(200, {"Content-Type": "text/plain", "Access-Control-Allow-Headers" : "Origin", "Access-Control-Allow-Origin" : "*"});
 		db.collection('users').insert({username: username.toLowerCase(), password: pwd, pseudo:username, connected:0, friendList:[], statut:""},function(err, doc){
 			if(err){				
 				res.end(JSON.stringify({message:"register_doublon"}));
@@ -71,11 +71,11 @@ exports.login=function(username, pwd, res){
 MongoClient.connect('mongodb://romain:alex@dogen.mongohq.com:10034/projet_maxime', function(err, db) {
 	if(err) {
 						console.log("erreur de connexion dans la fonction login: "+err);
-						res.writeHead(503, {"Content-Type": "text/plain", "Access-Control-Allow-Headers" : "Origin", "Access-Control-Allow-Origin" : "*","Access-Control-Allow-Methods": "GET, POST, OPTIONS, PUT, PATCH, DELETE"});
+						res.writeHead(503, {"Content-Type": "text/plain", "Access-Control-Allow-Headers" : "Origin", "Access-Control-Allow-Origin" : "*"});
 						res.end(JSON.stringify({message: "connexion_error"}));
 						return;
 	}else{
-		res.writeHead(200, {"Content-Type": "text/plain", "Access-Control-Allow-Headers" : "Origin", "Access-Control-Allow-Origin" : "*","Access-Control-Allow-Methods": "GET, POST, OPTIONS, PUT, PATCH, DELETE"});		
+		res.writeHead(200, {"Content-Type": "text/plain", "Access-Control-Allow-Headers" : "Origin", "Access-Control-Allow-Origin" : "*"});		
 		db.collection('users').update({username: username, password:pwd},{ $set: {"connected":1}}, { upsert: false }, function(err, docs){
 			if (err) {//en cas d'erreur de la fonction find
 				console.log("erreur lors dans la fonction login, collection.find: "+err);
@@ -113,11 +113,11 @@ exports.logout = function(id, res){
 MongoClient.connect('mongodb://romain:alex@dogen.mongohq.com:10034/projet_maxime', function(err, db) {
 	if(err) {
 			console.log("erreur de connexion fonction logout: "+err);
-			res.writeHead(503, {"Content-Type": "text/plain", "Access-Control-Allow-Headers" : "Origin", "Access-Control-Allow-Origin" : "*","Access-Control-Allow-Methods": "GET, POST, OPTIONS, PUT, PATCH, DELETE"});
+			res.writeHead(503, {"Content-Type": "text/plain", "Access-Control-Allow-Headers" : "Origin", "Access-Control-Allow-Origin" : "*"});
 			res.end(JSON.stringify({message: "connexion_error"}));
 			return;
 	}else{
-		res.writeHead(200, {"Content-Type": "text/plain", "Access-Control-Allow-Headers" : "Origin", "Access-Control-Allow-Origin" : "*","Access-Control-Allow-Methods": "GET, POST, OPTIONS, PUT, PATCH, DELETE"});
+		res.writeHead(200, {"Content-Type": "text/plain", "Access-Control-Allow-Headers" : "Origin", "Access-Control-Allow-Origin" : "*"});
 		db.collection('users').update({_id: ObjectId(id)},{ $set: {"connected":0}}, function(err, docs){
 					if(err) {
 						res.end(JSON.stringify({message: "logout_ko"}));
@@ -147,12 +147,12 @@ exports.delete_ = function (id, password, res){
 MongoClient.connect('mongodb://romain:alex@dogen.mongohq.com:10034/projet_maxime', function(err, db) {
 	if(err) {
 				console.log("erreur connexion fonction set_info: "+err);
-				res.writeHead(503, {"Content-Type": "text/plain", "Access-Control-Allow-Headers" : "Origin", "Access-Control-Allow-Origin" : "*","Access-Control-Allow-Methods": "GET, POST, OPTIONS, PUT, PATCH, DELETE"});
+				res.writeHead(503, {"Content-Type": "text/plain", "Access-Control-Allow-Headers" : "Origin", "Access-Control-Allow-Origin" : "*"});
 				res.end(JSON.stringify({message: "connexion_error"}));
 				return;
 			}
 	else{
-		res.writeHead(200, {"Content-Type": "text/plain", "Access-Control-Allow-Headers" : "Origin", "Access-Control-Allow-Origin" : "*","Access-Control-Allow-Methods": "GET, POST, OPTIONS, PUT, PATCH, DELETE"});		
+		res.writeHead(200, {"Content-Type": "text/plain", "Access-Control-Allow-Headers" : "Origin", "Access-Control-Allow-Origin" : "*"});		
 		db.collection('users').remove({_id: ObjectId(id), password:password},function(err, doc){
 			if(err){
 				console.log("erreur fonction delete fonction remove: "+err);
@@ -190,12 +190,12 @@ exports.get_info=function(id, res){
 	MongoClient.connect('mongodb://romain:alex@dogen.mongohq.com:10034/projet_maxime', function(err, db) {
 	if(err) {	
 				console.log("erreur fonction get_info connection: "+err);
-				res.writeHead(503, {"Content-Type": "text/plain", "Access-Control-Allow-Headers" : "Origin", "Access-Control-Allow-Origin" : "*","Access-Control-Allow-Methods": "GET, POST, OPTIONS, PUT, PATCH, DELETE"});
+				res.writeHead(503, {"Content-Type": "text/plain", "Access-Control-Allow-Headers" : "Origin", "Access-Control-Allow-Origin" : "*"});
 				res.end(JSON.stringify({message: "connexion_error"}));
 				return;
 			}
 	else{	
-		res.writeHead(200, {"Content-Type": "text/plain", "Access-Control-Allow-Headers" : "Origin", "Access-Control-Allow-Origin" : "*","Access-Control-Allow-Methods": "GET, POST, OPTIONS, PUT, PATCH, DELETE"});		
+		res.writeHead(200, {"Content-Type": "text/plain", "Access-Control-Allow-Headers" : "Origin", "Access-Control-Allow-Origin" : "*"});		
 		db.collection('users').find({_id: ObjectId(id)}).toArray(function(err, results1){
 			if(err){
 				console.log("erreur fonction get_info fonction find 1: "+err);
@@ -247,12 +247,12 @@ exports.set_info=function(status_user, id, res){
 MongoClient.connect('mongodb://romain:alex@dogen.mongohq.com:10034/projet_maxime', function(err, db) {
 	if(err) {
 				console.log("erreur connexion fonction set_info: "+err);
-				res.writeHead(503, {"Content-Type": "text/plain", "Access-Control-Allow-Headers" : "Origin", "Access-Control-Allow-Origin" : "*","Access-Control-Allow-Methods": "GET, POST, OPTIONS, PUT, PATCH, DELETE"});
+				res.writeHead(503, {"Content-Type": "text/plain", "Access-Control-Allow-Headers" : "Origin", "Access-Control-Allow-Origin" : "*"});
 				res.end(JSON.stringify({message: "connexion_error"}));
 				return;
 			}
 	else{	
-			res.writeHead(200, {"Content-Type": "text/plain", "Access-Control-Allow-Headers" : "Origin", "Access-Control-Allow-Origin" : "*","Access-Control-Allow-Methods": "GET, POST, OPTIONS, PUT, PATCH, DELETE"});				
+			res.writeHead(200, {"Content-Type": "text/plain", "Access-Control-Allow-Headers" : "Origin", "Access-Control-Allow-Origin" : "*"});				
 			db.collection('users').update({_id: ObjectId(id)}, { $set: {"statut":status_user}}, { upsert: false }, function(err, doc){
 							if(err){
 								console.log("erreur fonction set_info fonction find: "+err);
@@ -288,11 +288,11 @@ exports.add_friend = function(friend,id,res){
 MongoClient.connect('mongodb://romain:alex@dogen.mongohq.com:10034/projet_maxime', function(err, db) {
 	if(err) {
 		console.log("erreur connexion fonction add_friend: "+err);
-		res.writeHead(503, {"Content-Type": "text/plain", "Access-Control-Allow-Headers" : "Origin", "Access-Control-Allow-Origin" : "*","Access-Control-Allow-Methods": "GET, POST, OPTIONS, PUT, PATCH, DELETE"});
+		res.writeHead(503, {"Content-Type": "text/plain", "Access-Control-Allow-Headers" : "Origin", "Access-Control-Allow-Origin" : "*"});
 		res.end(JSON.stringify({message: "connexion_error"}));
 		return;
 	}else{
-		res.writeHead(200, {"Content-Type": "text/plain", "Access-Control-Allow-Headers" : "Origin", "Access-Control-Allow-Origin" : "*","Access-Control-Allow-Methods": "GET, POST, OPTIONS, PUT, PATCH, DELETE"});		
+		res.writeHead(200, {"Content-Type": "text/plain", "Access-Control-Allow-Headers" : "Origin", "Access-Control-Allow-Origin" : "*"});		
 		db.collection('users').find({_id: ObjectId(id)}).toArray(function(err, results){
 					if(err) {
 							console.log("erreur fonction add_friend, fonction find: "+err);
@@ -353,11 +353,11 @@ exports.get_friends = function(id,res){
 MongoClient.connect('mongodb://romain:alex@dogen.mongohq.com:10034/projet_maxime', function(err, db) {
 	if(err) {
 			console.log("erreur de connexion fonction get friends: "+err);
-			res.writeHead(503, {"Content-Type": "text/plain", "Access-Control-Allow-Headers" : "Origin", "Access-Control-Allow-Origin" : "*","Access-Control-Allow-Methods": "GET, POST, OPTIONS, PUT, PATCH, DELETE"});		
+			res.writeHead(503, {"Content-Type": "text/plain", "Access-Control-Allow-Headers" : "Origin", "Access-Control-Allow-Origin" : "*"});		
 			res.end(JSON.stringify({message: "connexion_error"}));
 			return;
 	}else{
-		res.writeHead(200, {"Content-Type": "text/plain", "Access-Control-Allow-Headers" : "Origin", "Access-Control-Allow-Origin" : "*","Access-Control-Allow-Methods": "GET, POST, OPTIONS, PUT, PATCH, DELETE"});						
+		res.writeHead(200, {"Content-Type": "text/plain", "Access-Control-Allow-Headers" : "Origin", "Access-Control-Allow-Origin" : "*"});						
 		db.collection('users').find({_id: ObjectId(id)}).toArray(function(err, results){//on veut acceder à la friend list du document avec le cookie correspondant
 					if(err) {
 						console.log("erreur fonction add_friends, fonction find: "+err);
@@ -395,11 +395,11 @@ exports.delete_friend = function(friend,id, res){
 MongoClient.connect('mongodb://romain:alex@dogen.mongohq.com:10034/projet_maxime', function(err, db) {
 	if(err) {//si erreur de connexion
 			console.log("erreur de connexion fonction delete_friend: "+err);
-			res.writeHead(503, {"Content-Type": "text/plain", "Access-Control-Allow-Headers" : "Origin", "Access-Control-Allow-Origin" : "*","Access-Control-Allow-Methods": "GET, POST, OPTIONS, PUT, PATCH, DELETE"});		
+			res.writeHead(503, {"Content-Type": "text/plain", "Access-Control-Allow-Headers" : "Origin", "Access-Control-Allow-Origin" : "*"});		
 			res.end(JSON.stringify({message: "connexion_error"}));
 			return;
 	}else{
-		res.writeHead(200, {"Content-Type": "text/plain", "Access-Control-Allow-Headers" : "Origin", "Access-Control-Allow-Origin" : "*","Access-Control-Allow-Methods": "GET, POST, OPTIONS, PUT, PATCH, DELETE"});				
+		res.writeHead(200, {"Content-Type": "text/plain", "Access-Control-Allow-Headers" : "Origin", "Access-Control-Allow-Origin" : "*"});				
 		db.collection('users').find({_id: ObjectId(id)}).toArray(function(err, results){
 					if(err) {//erreur fonction find
 							console.log("erreur fonction delete_friend, fonction find: "+err);

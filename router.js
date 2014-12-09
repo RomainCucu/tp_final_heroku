@@ -42,7 +42,7 @@ rest_method:
 			this.post_method();
 		} else {
 			console.log("501 error")
-			this.resp.writeHead(501,{"Content -Type": "application/json"});
+			this.resp.writeHead(501,{"Content -Type": "application/json","Access-Control-Allow-Headers" : "Origin", "Access-Control-Allow-Origin" : "*"});
 			this.resp.write(JSON.stringify({message: "Not Implemented"}));
 			this.resp.end();
 			return;
@@ -80,12 +80,11 @@ post_method:
 go_post:
 
 	function (b) {
-		console.log("gopost ici");
 		b = JSON.parse(b);
 		this.b = b;
 		if (b.id_){
 			if(!isValidId(b.id_)){
-				this.resp.writeHead(200,{"Content-Type": "text/plain", "Access-Control-Allow-Headers" : "Origin", "Access-Control-Allow-Origin" : "*","Access-Control-Allow-Methods": "GET, POST, OPTIONS, PUT, PATCH, DELETE"});
+				this.resp.writeHead(200,{"Content-Type": "text/plain", "Access-Control-Allow-Headers" : "Origin", "Access-Control-Allow-Origin" : "*"});
 				this.resp.end(JSON.stringify({message: "hack_attempt"}));
 				return;
 			}
@@ -96,22 +95,21 @@ go_post:
 			if (isAlphaNumeric(b.password) && isAlphaNumeric(b.username) && isLengthValid(b.password) && isLengthValid(b.username)){								
 				db.login(b.username.toLowerCase(), b.password, this.resp);
 			}else{
-				this.resp.writeHead(200,{"Content-Type": "text/plain", "Access-Control-Allow-Headers" : "Origin", "Access-Control-Allow-Origin" : "*","Access-Control-Allow-Methods": "GET, POST, OPTIONS, PUT, PATCH, DELETE"});
+				this.resp.writeHead(200,{"Content-Type": "text/plain", "Access-Control-Allow-Headers" : "Origin", "Access-Control-Allow-Origin" : "*"});
 				this.resp.end(JSON.stringify({message: "login_connexion_refused"}));
 			}			
 		}		
 		else if (b.ac == "register"){
 			traitementData(b.username);
-			traitementData(b.password);	
-			console.log("ici");
-			this.resp.writeHead(200,{"Content-Type": "text/plain", "Access-Control-Allow-Headers" : "Origin", "Access-Control-Allow-Origin" : "*","Access-Control-Allow-Methods": "GET, POST, OPTIONS, PUT, PATCH, DELETE"});
-			this.resp.end(JSON.stringify({message: "register_problem_info_entered"}));
-			/*if (isAlphaNumeric(b.password) && isAlphaNumeric(b.username) && isLengthValid(b.password) && isLengthValid(b.username)){				
+			traitementData(b.password);				
+			//this.resp.writeHead(200,{"Content-Type": "text/plain", "Access-Control-Allow-Headers" : "Origin", "Access-Control-Allow-Origin" : "*"});
+			//this.resp.end(JSON.stringify({message: "register_problem_info_entered"}));
+			if (isAlphaNumeric(b.password) && isAlphaNumeric(b.username) && isLengthValid(b.password) && isLengthValid(b.username)){				
 				db.register(b.username, b.password, this.resp);
 			}else {
-				this.resp.writeHead(200,{"Content-Type": "text/plain", "Access-Control-Allow-Headers" : "Origin", "Access-Control-Allow-Origin" : "*","Access-Control-Allow-Methods": "GET, POST, OPTIONS, PUT, PATCH, DELETE"});
+				this.resp.writeHead(200,{"Content-Type": "text/plain", "Access-Control-Allow-Headers" : "Origin", "Access-Control-Allow-Origin" : "*"});
 				this.resp.end(JSON.stringify({message: "register_problem_info_entered"}));
-			}*/			
+			}		
 		}else if (b.ac == "logout"){
 				traitementData(b.id_);			
 				db.logout(b.id_, this.resp);	
@@ -123,7 +121,7 @@ go_post:
 				if(isLengthValid(b.password) && isAlphaNumeric(b.password)){
 					db.delete_(b.id_, b.password, this.resp);					
 				} else{
-					this.resp.writeHead(200,{"Content-Type": "text/plain", "Access-Control-Allow-Headers" : "Origin", "Access-Control-Allow-Origin" : "*","Access-Control-Allow-Methods": "GET, POST, OPTIONS, PUT, PATCH, DELETE"});
+					this.resp.writeHead(200,{"Content-Type": "text/plain", "Access-Control-Allow-Headers" : "Origin", "Access-Control-Allow-Origin" : "*"});
 					this.resp.end(JSON.stringify({message: "error_delete_account"}));	
 				} 
 			}else if(b.ac == "add_friend"){				
@@ -132,7 +130,7 @@ go_post:
 				if(isLengthValid(b.friend_to_add) && isAlphaNumeric(b.friend_to_add)){//si la taille du string est supérieur à 0 on recherche l'ami sinon ca vaut pas le coup
 					db.add_friend(b.friend_to_add,b.id_, this.resp);
 				}else{
-					this.resp.writeHead(200,{"Content-Type": "text/plain", "Access-Control-Allow-Headers" : "Origin", "Access-Control-Allow-Origin" : "*","Access-Control-Allow-Methods": "GET, POST, OPTIONS, PUT, PATCH, DELETE"});
+					this.resp.writeHead(200,{"Content-Type": "text/plain", "Access-Control-Allow-Headers" : "Origin", "Access-Control-Allow-Origin" : "*"});
 					this.resp.end(JSON.stringify({message: "add_friend_ko_length"}));
 				}				
 			}else if(b.ac == "delete_friend"){
@@ -141,7 +139,7 @@ go_post:
 				if(isLengthValid(b.friend_to_delete) && isAlphaNumeric(b.friend_to_delete)){
 					db.delete_friend(b.friend_to_delete,b.id_, this.resp);
 				}else{
-					this.resp.writeHead(200,{"Content-Type": "text/plain", "Access-Control-Allow-Headers" : "Origin", "Access-Control-Allow-Origin" : "*","Access-Control-Allow-Methods": "GET, POST, OPTIONS, PUT, PATCH, DELETE"});
+					this.resp.writeHead(200,{"Content-Type": "text/plain", "Access-Control-Allow-Headers" : "Origin", "Access-Control-Allow-Origin" : "*"});
 					this.resp.end(JSON.stringify({message: "error_deleting_friend"}));
 				}
 			}else if(b.ac == "get_friends"){
@@ -155,7 +153,7 @@ go_post:
 					traitementData(b.id_);
 					db.set_info(b.status_user, b.id_, this.resp);
 				}else{
-					this.resp.writeHead(200,{"Content-Type": "text/plain", "Access-Control-Allow-Headers" : "Origin", "Access-Control-Allow-Origin" : "*","Access-Control-Allow-Methods": "GET, POST, OPTIONS, PUT, PATCH, DELETE"});
+					this.resp.writeHead(200,{"Content-Type": "text/plain", "Access-Control-Allow-Headers" : "Origin", "Access-Control-Allow-Origin" : "*"});
 					this.resp.end(JSON.stringify({message: "too_short_or_too_long"}));
 				}
 			}
@@ -174,8 +172,8 @@ function () {
 		this.path = "./index.html";
 		this.filetype = "html";
 	}*/
-	this.resp.writeHead(200,{"Content-Type": "text/plain", "Access-Control-Allow-Headers" : "Origin", "Access-Control-Allow-Origin" : "*","Access-Control-Allow-Methods": "GET, POST, OPTIONS, PUT, PATCH, DELETE"});
-	this.resp.end("<h1>bonjour</h1>")
+	this.resp.writeHead(200,{"Content-Type": "text/plain", "Access-Control-Allow-Headers" : "Origin", "Access-Control-Allow-Origin" : "*"});
+	this.resp.end("<h1>bonjour</h1>");
 	//this.load_file();	
 },
 	
