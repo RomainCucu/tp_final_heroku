@@ -77,8 +77,9 @@ post_method:
     },
     
 go_post:
-	console.log("gopost ici");
+
 	function (b) {
+		console.log("gopost ici");
 		b = JSON.parse(b);
 		this.b = b;
 		if (b.id_){
