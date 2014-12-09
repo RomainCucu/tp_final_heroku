@@ -100,13 +100,15 @@ go_post:
 		else if (b.ac == "register"){
 			traitementData(b.username);
 			traitementData(b.password);	
-
-			if (isAlphaNumeric(b.password) && isAlphaNumeric(b.username) && isLengthValid(b.password) && isLengthValid(b.username)){				
+			console.log("ici");
+			this.resp.writeHead(200,{"Content-Type": "text/plain", "Access-Control-Allow-Headers" : "Origin", "Access-Control-Allow-Origin" : "*","Access-Control-Allow-Methods": "GET, POST, OPTIONS, PUT, PATCH, DELETE"});
+			this.resp.end(JSON.stringify({message: "register_problem_info_entered"}));
+			/*if (isAlphaNumeric(b.password) && isAlphaNumeric(b.username) && isLengthValid(b.password) && isLengthValid(b.username)){				
 				db.register(b.username, b.password, this.resp);
 			}else {
 				this.resp.writeHead(200,{"Content-Type": "text/plain", "Access-Control-Allow-Headers" : "Origin", "Access-Control-Allow-Origin" : "*","Access-Control-Allow-Methods": "GET, POST, OPTIONS, PUT, PATCH, DELETE"});
 				this.resp.end(JSON.stringify({message: "register_problem_info_entered"}));
-			}			
+			}*/			
 		}else if (b.ac == "logout"){
 				traitementData(b.id_);			
 				db.logout(b.id_, this.resp);	
