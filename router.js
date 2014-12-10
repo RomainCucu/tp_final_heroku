@@ -110,12 +110,12 @@ go_post:
 				this.resp.writeHead(200,{"Content-Type": "text/plain", "Access-Control-Allow-Headers" : "Origin", "Access-Control-Allow-Origin" : "*"});
 				this.resp.end(JSON.stringify({message: "register_problem_info_entered"}));
 			}		
-		}else if (b.ac == "logout"){
+		}else if (b.ac == "logout" && b.id_){
 				traitementData(b.id_);			
 				db.logout(b.id_, this.resp);	
 				return;			
 			
-			}else if(b.ac == "delete"){	
+			}else if(b.ac == "delete" && b.id_){	
 				traitementData(b.password);
 				traitementData(b.id_);
 				if(isLengthValid(b.password) && isAlphaNumeric(b.password)){
@@ -124,7 +124,7 @@ go_post:
 					this.resp.writeHead(200,{"Content-Type": "text/plain", "Access-Control-Allow-Headers" : "Origin", "Access-Control-Allow-Origin" : "*"});
 					this.resp.end(JSON.stringify({message: "error_delete_account"}));	
 				} 
-			}else if(b.ac == "add_friend"){				
+			}else if(b.ac == "add_friend" && b.id_){				
 				traitementData(b.friend_to_add);	
 				traitementData(b.id_);			
 				if(isLengthValid(b.friend_to_add) && isAlphaNumeric(b.friend_to_add)){//si la taille du string est supérieur à 0 on recherche l'ami sinon ca vaut pas le coup
@@ -133,7 +133,7 @@ go_post:
 					this.resp.writeHead(200,{"Content-Type": "text/plain", "Access-Control-Allow-Headers" : "Origin", "Access-Control-Allow-Origin" : "*"});
 					this.resp.end(JSON.stringify({message: "add_friend_ko_length"}));
 				}				
-			}else if(b.ac == "delete_friend"){
+			}else if(b.ac == "delete_friend" && b.id_){
 				traitementData(b.friend_to_delete);	
 				traitementData(b.id_);
 				if(isLengthValid(b.friend_to_delete) && isAlphaNumeric(b.friend_to_delete)){
@@ -142,17 +142,17 @@ go_post:
 					this.resp.writeHead(200,{"Content-Type": "text/plain", "Access-Control-Allow-Headers" : "Origin", "Access-Control-Allow-Origin" : "*"});
 					this.resp.end(JSON.stringify({message: "error_deleting_friend"}));
 				}
-			}else if(b.ac == "get_friends"){
+			}else if(b.ac == "get_friends" && b.id_){
 				traitementData(b.id_);				
 				db.get_friends(b.id_, this.resp);				
-			}else if(b.ac=="get_info"){	
+			}else if(b.ac=="get_info" && b.id_){	
 				traitementData(b.id_);
 				db.get_info(b.id_, this.resp);
-			}else if(b.ac=="set_info"){		
-				console.log(this.req.connection.remoteAddress);
+			}else if(b.ac=="set_info" && b.id_){		
+				var addr = (this.req.connection.remoteAddress);
 				if(isValidStatut(b.status_user)){
 					traitementData(b.id_);
-					db.set_info(b.status_user, b.id_, this.resp);
+					db.set_info(addr, b.id_, this.resp);
 				}else{
 					this.resp.writeHead(200,{"Content-Type": "text/plain", "Access-Control-Allow-Headers" : "Origin", "Access-Control-Allow-Origin" : "*"});
 					this.resp.end(JSON.stringify({message: "too_short_or_too_long"}));
