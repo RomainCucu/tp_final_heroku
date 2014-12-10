@@ -252,7 +252,9 @@ exports.get_info_perso = function(id,res){
 				res.end(JSON.stringify({message:"get_info_perso_ok", donnees:results1[0]}));
 			}else res.end(JSON.stringify({message:"get_info_perso_ko"}));
 
-};
+});
+		}
+	})};
 
 /**
 *FONCTION SET_INFO
