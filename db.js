@@ -86,7 +86,7 @@ MongoClient.connect('mongodb://romain:alex@dogen.mongohq.com:10034/projet_maxime
 				db.collection('users').find({username:username,password:pwd}).toArray(function(err,results){				
 					infos={};//objet transmis au client
 					infos.message="login_ok";
-					infos.id=""+results[0];
+					infos.id=results[0];
 					res.end(JSON.stringify(infos));
 					db.close();
 				});				
