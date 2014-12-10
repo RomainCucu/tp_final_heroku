@@ -223,6 +223,7 @@ isAlphaNumeric = function(str){
 /**
 *Fonction qui retourne vraie si la chaine entrée est alphanumérique, et renvoie faux sinon
 */
+if(!str) return false;
 	var reg = new RegExp(/^\w+$/);
 	return reg.test(str);
 };
@@ -240,6 +241,7 @@ isLengthValid = function(str){
 /**
 *fonction qui retourne vrai si le string en paramètre est comprise entre 3 et 15 caractères
 */
+if(!str) return false;
 	minLength = 3;
 	maxLength = 15;
 	if(str.length>=minLength && str.length<=maxLength){
@@ -255,6 +257,7 @@ isValidStatut = function(str){
 *- force le paramètre en string;
 *- vérifie si la longueur totale est comprise entre 2 et 150 caractères
 */
+if(!str) return false;
 	str+="";
 	if(str.length>1 && str.length<151){
 		return true;
@@ -268,6 +271,7 @@ isValidId = function(str){
 	/**
 	*Fonction qui vérifie que l'id passé est composé de 12 caractère, sinon ca fait cracher le serveur	
 	*/
+	if(!str) return false;
 	str+="";
 	if (str.length==24){
 		return true;
