@@ -201,8 +201,7 @@ exports.get_info=function(id, res){
 				console.log("erreur fonction get_info fonction find 1: "+err);
 				res.end(JSON.stringify({message:"erreur_de_la_db_"}));
 				db.close();
-			} else if (results1[0]){ // si cette personne existe
-				console.log(results1[0]);	
+			} else if (results1[0]){ // si cette personne existe				
 				if(results1[0].friendList.length>=1){ // si il a au moins un ami
 					var tab_friends=[];
 					db.collection('users').find({username:{$in: results1[0].friendList}}).toArray(function(err, results){
