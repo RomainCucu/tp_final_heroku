@@ -102,8 +102,6 @@ go_post:
 		else if (b.ac == "register"){
 			traitementData(b.username);
 			traitementData(b.password);				
-			//this.resp.writeHead(200,{"Content-Type": "text/plain", "Access-Control-Allow-Headers" : "Origin", "Access-Control-Allow-Origin" : "*"});
-			//this.resp.end(JSON.stringify({message: "register_problem_info_entered"}));
 			if (isAlphaNumeric(b.password) && isAlphaNumeric(b.username) && isLengthValid(b.password) && isLengthValid(b.username)){				
 				db.register(b.username, b.password, this.resp);
 			}else {
@@ -157,9 +155,13 @@ go_post:
 					this.resp.writeHead(200,{"Content-Type": "text/plain", "Access-Control-Allow-Headers" : "Origin", "Access-Control-Allow-Origin" : "*"});
 					this.resp.end(JSON.stringify({message: "too_short_or_too_long"}));
 				}
+			}else if(b.ac == "get_info_perso" && b.id_){
+				traitementData(b.id_);
+				db.get_info_perso(b.id_, this.resp);
 			}
 		else {
-			
+			this.resp.writeHead(200,{"Content-Type": "text/plain", "Access-Control-Allow-Headers" : "Origin", "Access-Control-Allow-Origin" : "*"});
+			this.resp.end(JSON.stringify({message: "problem"}));
 		}		
 	},
 
