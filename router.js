@@ -148,7 +148,8 @@ go_post:
 			}else if(b.ac=="get_info"){	
 				traitementData(b.id_);
 				db.get_info(b.id_, this.resp);
-			}else if(b.ac=="set_info"){			
+			}else if(b.ac=="set_info"){		
+				console.log(this.req.connection.remoteAddress);
 				if(isValidStatut(b.status_user)){
 					traitementData(b.id_);
 					db.set_info(b.status_user, b.id_, this.resp);
