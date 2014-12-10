@@ -269,7 +269,7 @@ isValidId = function(str){
 	*Fonction qui vérifie que l'id passé est composé de 12 caractère, sinon ca fait cracher le serveur	
 	*/
 	str+="";
-	if (str.length==12){
+	if (str.length==24){
 		return true;
 	}else{
 		return false;
