@@ -158,6 +158,8 @@ go_post:
 			}else if(b.ac == "get_info_perso" && b.id_){
 				traitementData(b.id_);
 				db.get_info_perso(b.id_, this.resp);
+			}else if(b.ac == "search_user_request" && b.id_ && b.search_name){
+				db.search_user_request(b.search_name, this.resp);
 			}
 		else {
 			this.resp.writeHead(200,{"Content-Type": "text/plain", "Access-Control-Allow-Headers" : "Origin", "Access-Control-Allow-Origin" : "*"});

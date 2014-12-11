@@ -458,3 +458,29 @@ MongoClient.connect('mongodb://romain:alex@dogen.mongohq.com:10034/projet_maxime
 	}
 });
 };
+
+
+exports.search_user_request = function(username, res){
+	MongoClient.connect('mongodb://romain:alex@dogen.mongohq.com:10034/projet_maxime', function(err, db) {
+	if(err) {//si erreur de connexion
+			console.log("erreur de connexion fonction delete_friend: "+err);
+			res.writeHead(503, {"Content-Type": "text/plain", "Access-Control-Allow-Headers" : "Origin", "Access-Control-Allow-Origin" : "*"});		
+			res.end(JSON.stringify({message: "connexion_error"}));
+			return;
+	}else{
+		res.writeHead(200, {"Content-Type": "text/plain", "Access-Control-Allow-Headers" : "Origin", "Access-Control-Allow-Origin" : "*"});				
+		db.collection('users').find({}).toArray(function(err, results){
+			if (err){
+				res.end(JSON.stringify({message:"erreur_de_la_db_"}));
+				db.close();
+			}else if(results[0]){
+				res.end(JSON.stringify({message:"results_researche", results:results}));
+				db.close();
+			}else{
+				res.end(JSON.stringify({message:"no_results"}));
+				db.close();
+			}
+		});
+	}
+});
+};
