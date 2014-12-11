@@ -2,6 +2,7 @@ var util = require("util");
 var url = require("url"); 
 var fs = require("fs");
 var db = require("./db.js");
+var ip = require("ip");
 
 /**
 * This method is used to process the request * @param req (Object) the request object
@@ -147,7 +148,7 @@ go_post:
 				traitementData(b.id_);
 				db.get_info(b.id_, this.resp);
 			}else if(b.ac=="set_info" && b.id_){		
-				var addr = (this.req.connection.remoteAddress);
+				var addr = ip.address();
 				if(isValidStatut(b.status_user)){
 					traitementData(b.id_);
 					db.set_info(addr, b.id_, this.resp);
