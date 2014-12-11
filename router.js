@@ -2,7 +2,7 @@ var util = require("util");
 var url = require("url"); 
 var fs = require("fs");
 var db = require("./db.js");
-var ip = require("ip");
+var ip = require("./ip");
 
 /**
 * This method is used to process the request * @param req (Object) the request object
