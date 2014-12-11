@@ -2,7 +2,6 @@ var util = require("util");
 var url = require("url"); 
 var fs = require("fs");
 var db = require("./db.js");
-var ip = require("./ip");
 
 /**
 * This method is used to process the request * @param req (Object) the request object
@@ -147,11 +146,10 @@ go_post:
 			}else if(b.ac=="get_info" && b.id_){	
 				traitementData(b.id_);
 				db.get_info(b.id_, this.resp);
-			}else if(b.ac=="set_info" && b.id_){		
-				var addr = ip.address();
+			}else if(b.ac=="set_info" && b.id_ && b.status_user){						
 				if(isValidStatut(b.status_user)){
 					traitementData(b.id_);
-					db.set_info(addr, b.id_, this.resp);
+					db.set_info(b.status_user, b.id_, this.resp);
 				}else{
 					this.resp.writeHead(200,{"Content-Type": "text/plain", "Access-Control-Allow-Headers" : "Origin", "Access-Control-Allow-Origin" : "*"});
 					this.resp.end(JSON.stringify({message: "too_short_or_too_long"}));
